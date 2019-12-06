@@ -4,9 +4,6 @@ export default styled.div`
     span {
         background: green;
         color: white;
-    }
-
-    button {
-        display: none;
+        text-decoration: line-through;
     }
 `;

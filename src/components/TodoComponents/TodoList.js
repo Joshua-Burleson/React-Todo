@@ -25,10 +25,16 @@ class ToDoList extends React.Component {
 
     };
 
-    // deleteItem(itemId){
-    //     const deleteIndex = this.state.itemsToDo.findIndex(item => Number(item.id) === Number(itemId));
-    //     this.setState({itemsToDo: this.state.itemsToDo.filter((item, index) => index !== deleteIndex)});
-    // };
+    addItem = task => {
+        this.setState({
+            itemsToDo: [...this.state.itemsToDo, {
+                task,
+                id: this.state.nextId,
+                completed: false
+            }],
+            nextId: this.state.nextId + 1
+        });
+    };
 
     markComplete = (itemId) => {
         const selectedItem = this.state.itemsToDo.find(item => Number(item.id) === Number(itemId));
@@ -42,26 +48,29 @@ class ToDoList extends React.Component {
         });
     };
 
-    addItem = task => {
+
+    toggleComplete = (itemId) => {
+        const selectedItem = this.state.itemsToDo.find(item => Number(item.id) === Number(itemId));
+        selectedItem.completed = ! selectedItem.completed;
+
+        const updatedItems = this.state.itemsToDo.map(item => item.id === selectedItem.id ? selectedItem : item);
+
         this.setState({
-            itemsToDo: [...this.state.itemsToDo, {
-                task,
-                id: this.state.nextId,
-                completed: false
-            }],
-            nextId: this.state.nextId + 1
+            itemsToDo: updatedItems,
+            nextId: this.state.nextId
         });
-    }
+    };
+
 
     deleteCompleted = () => this.setState({
         itemsToDo: this.state.itemsToDo.filter(item => !item.completed),
         nextId: this.state.nextId,
-    })
+    });
 
     render(){
         return (
             <>
-            {this.state.itemsToDo && this.state.itemsToDo.map(item => <ToDo key={item.id} item={item} markComplete={this.markComplete}/>)}
+            {this.state.itemsToDo && this.state.itemsToDo.map(item => <ToDo key={item.id} item={item} toggleComplete={this.toggleComplete}/>)}
             <ToDoForm addItem={this.addItem} deleteCompleted={this.deleteCompleted}/>
             </>
         )

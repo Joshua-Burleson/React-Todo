@@ -10,15 +10,16 @@ class ToDo extends React.Component {
 
     render() {
         return (
-            <>
+            <div>
             {
                 this.toDoItem.completed ? <Completed key={this.toDoItem.id}><span>{this.toDoItem.task}</span></Completed>
                                     : <Pending key={this.toDoItem.id}>
                                         <span>{this.toDoItem.task}</span>
-                                        <button id={this.toDoItem.id} onClick={e => this.props.markComplete(e.target.id)}>Mark Complete</button>
                                     </Pending>
+                
             }
-            </>
+            <button id={this.toDoItem.id} onClick={e => this.props.toggleComplete(e.target.id)}>{this.toDoItem.completed ? `Mark Incomplete` : `Mark Complete`}</button>
+            </div>
         );
     }
 }
