@@ -21,11 +21,13 @@ class ToDoForm extends React.Component {
 
     render(){
         return(
-        <form onSubmit={(e) => this.handleSubmit(e)}>
-            <input onChange={e => this.handleInputChange(e)} type='text' placeholder="New Task" value={this.state.newItem}></input>
-            <input type='submit'></input>
-        </form>
-        <button onClick={() => this.props.deleteCompleted()}>Delete Completed</button>
+        <>
+            <form onSubmit={(e) => this.handleSubmit(e)}>
+                <input onChange={e => this.handleInputChange(e)} type='text' placeholder="New Task" value={this.state.newItem}></input>
+                <input type='submit'></input>
+            </form>
+            <button onClick={() => this.props.deleteCompleted()}>Delete Completed</button>
+        </>
         );
     }
 }
