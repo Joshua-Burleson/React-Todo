@@ -25,29 +25,21 @@ class ToDoList extends React.Component {
 
     };
 
+    setStorage = itemArray => localStorage.setItem('itemsToDo', JSON.stringify(itemArray));
+
     addItem = task => {
+        const updatedItemsToDo =  [...this.state.itemsToDo, {
+            task,
+            id: this.state.nextId,
+            completed: false
+        }];
         this.setState({
-            itemsToDo: [...this.state.itemsToDo, {
-                task,
-                id: this.state.nextId,
-                completed: false
-            }],
+            itemsToDo: updatedItemsToDo,
             nextId: this.state.nextId + 1
         });
+
+        this.setStorage(updatedItemsToDo);
     };
-
-    markComplete = (itemId) => {
-        const selectedItem = this.state.itemsToDo.find(item => Number(item.id) === Number(itemId));
-        selectedItem.completed = true;
-
-        const updatedItems = this.state.itemsToDo.map(item => item.id === selectedItem.id ? selectedItem : item);
-
-        this.setState({
-            itemsToDo: updatedItems,
-            nextId: this.state.nextId
-        });
-    };
-
 
     toggleComplete = (itemId) => {
         const selectedItem = this.state.itemsToDo.find(item => Number(item.id) === Number(itemId));
@@ -59,13 +51,19 @@ class ToDoList extends React.Component {
             itemsToDo: updatedItems,
             nextId: this.state.nextId
         });
+
+        this.setStorage(updatedItems);
     };
 
 
-    deleteCompleted = () => this.setState({
-        itemsToDo: this.state.itemsToDo.filter(item => !item.completed),
-        nextId: this.state.nextId,
-    });
+    deleteCompleted = () => {
+        const updatedItemsToDo = this.state.itemsToDo.filter(item => !item.completed);
+        this.setState({
+            itemsToDo: updatedItemsToDo,
+            nextId: this.state.nextId
+        });
+        this.setStorage(updatedItemsToDo);
+        }
 
     render(){
         return (
