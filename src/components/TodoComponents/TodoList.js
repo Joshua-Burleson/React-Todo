@@ -62,8 +62,7 @@ class ToDoList extends React.Component {
         return (
             <>
             {this.state.itemsToDo && this.state.itemsToDo.map(item => <ToDo key={item.id} item={item} markComplete={this.markComplete}/>)}
-            <ToDoForm addItem={this.addItem} />
-            <button onClick={() => this.deleteCompleted()}>Delete Completed</button>
+            <ToDoForm addItem={this.addItem} deleteCompleted={this.deleteCompleted}/>
             </>
         )
     }
